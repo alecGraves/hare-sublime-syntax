@@ -1,5 +1,7 @@
 # Hare Sublime Syntax
 
+This adds syntax highlighting for [Hare](https://harelang.org) to Sublime Text.
+
 It's literally just `hare.sublime-syntax`.
 
 This was generated from the `hare.tmLanguage.json` file in: https://github.com/aDotInTheVoid/hare-highlighing-vscode
