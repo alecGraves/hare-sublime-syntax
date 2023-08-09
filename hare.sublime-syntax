@@ -15,41 +15,41 @@ contexts:
     - include: boolean
     - include: int_dec_lit
     - include: char_lit
-      #  Comparison operator:
+    # Comparison operator:
     - match: (&&|\|\||==|!=)
       scope: keyword.operator.comparison.hare
-      #  Assignment operator:
+    # Assignment operator:
     - match: (\+=|-=|/=|\*=|%=|\^=|&=|\|=|<<=|>>=|=)
       scope: keyword.operator.assignment.hare
-      #  Arithmetic operator:
+    # Arithmetic operator:
     - match: (!|\+|-|/|\*|%|\^|&|\||<<|>>)
       scope: keyword.operator.arithmetic.hare
-      #  Comparison operator (second group because of regex precedence):
+    # Comparison operator (second group because of regex precedence):
     - match: (<=|>=|<|>)
       scope: keyword.operator.comparison.hare
-      #  Preprocessor Directive:
+    # Preprocessor Directive:
     - match: '(@[a-z]+)'
       scope: comment.block.preprocessor.hare
-      #  Conversion Operators:
+    # Conversion Operators:
     - match: \b(is|as)\b
       scope: keyword.operator.conversion.hare
 
-  #  Boolean constant
+  # Boolean constant
   boolean:
     - match: \b(true|false)\b
       scope: constant.language.boolean.hare
 
-  #  Single-quote string literal (character)
+  # Single-quote string literal (character)
   char_lit:
     - match: 'b?''([^''\\]|\\(x[0-9A-Fa-f]{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.))'''
       scope: string.quoted.single.hare
 
-  #  Built-in/core type
+  # Built-in/core type
   core_types:
     - match: \b(str|rune|char|bool|int|uint|uintptr|u8|u16|u32|u64|i8|i16|i32|i64|f32|f64|null|void|nullable|valist)\b
       scope: support.type.primitive.hare
 
-  #  Integer literal (decimal)
+  # Integer literal (decimal)
   int_dec_lit:
     - match: '\b[0-9][0-9_]*\b'
       scope: constant.numeric.integer.decimal.hare
@@ -65,7 +65,7 @@ contexts:
         - match: $
           pop: true
 
-  #  Miscellaneous operator
+  # Miscellaneous operators
   misc_ops:
     - match: (=>|::|:|\?|!|\|)
       scope: keyword.operator.misc.hare
