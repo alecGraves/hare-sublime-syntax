@@ -13,7 +13,11 @@ contexts:
     - include: misc_ops
     - include: core_types
     - include: boolean
+    - include: float_lit
     - include: int_dec_lit
+    - include: int_bin_lit
+    - include: int_oct_lit
+    - include: int_hex_lit
     - include: char_lit
     # Comparison operator:
     - match: (&&|\|\||==|!=)
@@ -51,8 +55,30 @@ contexts:
 
   # Integer literal (decimal)
   int_dec_lit:
-    - match: '\b[0-9][0-9_]*\b'
+    - match: '\b[0-9]+((e|E)[0-9]+)?(z|(u|i)(8|16|32|64)?)?\b'
       scope: constant.numeric.integer.decimal.hare
+
+  # Integer literal (binary)
+  int_bin_lit:
+    - match: '\b0b[0-1]+(z|(u|i)(8|16|32|64)?)?\b'
+      scope: constant.numeric.integer.binary.hare
+
+  # Integer literal (octal)
+  int_oct_lit:
+    - match: '\b0o[0-7]+(z|(u|i)(8|16|32|64)?)?\b'
+      scope: constant.numeric.integer.octal.hare
+
+  # Integer literal (hex)
+  int_hex_lit:
+    - match: '\b0x[0-9A-Fa-f]+(z|(u|i)(8|16|32|64)?)?\b'
+      scope: constant.numeric.integer.hex.hare
+
+  # Floating point literal
+  float_lit:
+    - match: '\b[0-9]+\.[0-9]+((e|E)(-)?[0-9]+)?(f(32|64))?\b'
+      scope: constant.numeric.floating.hare
+    - match: '\b[0-9]+((e|E)(-)?[0-9]+)?f(32|64)\b'
+      scope: constant.numeric.floating.hare
 
   keywords:
     - match: \b(abort|alloc|append|assert|break|case|const|continue|def|defer|delete|else|enum|export|fn|for|free|if|insert|len|let|match|offset|return|size|static|struct|switch|type|union|vaarg|vaend|vastart|yield|use)\b
@@ -70,14 +96,20 @@ contexts:
     - match: (=>|::|:|\?|!|\|)
       scope: keyword.operator.misc.hare
 
+  # Strings
+  # see: haredoc fmt
   strings:
     - match: '"'
       push:
         - meta_scope: string.quoted.double.hare
         - match: '"'
           pop: true
-        - match: \\.
+        - match: \\(0|a|b|f|n|r|t|v|\\|\'|\"|x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})
           scope: constant.character.escape.hare
+        - match: '\{\{|\}\}'
+          scope: constant.character.format.hare
+        - match: '{([0-9]*(:[0\-\+\ ]*[0-9]*(x|X|o|b)?)?|[0-9]*%[0-9]*|)}'
+          scope: constant.character.format.hare
 
   strings_2:
     - match: '`'
@@ -85,3 +117,7 @@ contexts:
         - meta_scope: string.quoted.single.hare
         - match: '`'
           pop: true
+        - match: '\{\{|\}\}'
+          scope: constant.character.format.hare
+        - match: '{([0-9]*(:[0\-\+\ ]*[0-9]*(x|X|o|b)?)?|[0-9]*%[0-9]*|)}'
+          scope: constant.character.format.hare
