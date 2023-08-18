@@ -96,14 +96,20 @@ contexts:
     - match: (=>|::|:|\?|!|\|)
       scope: keyword.operator.misc.hare
 
+  # Strings
+  # see: haredoc fmt
   strings:
     - match: '"'
       push:
         - meta_scope: string.quoted.double.hare
         - match: '"'
           pop: true
-        - match: \\.
+        - match: \\(0|a|b|f|n|r|t|v|\\|\'|\"|x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})
           scope: constant.character.escape.hare
+        - match: '\{\{|\}\}'
+          scope: constant.character.format.hare
+        - match: '{([0-9]*(:[0\-\+\ ]*[0-9]*(x|X|o|b)?)?|[0-9]*%[0-9]*|)}'
+          scope: constant.character.format.hare
 
   strings_2:
     - match: '`'
@@ -111,3 +117,7 @@ contexts:
         - meta_scope: string.quoted.single.hare
         - match: '`'
           pop: true
+        - match: '\{\{|\}\}'
+          scope: constant.character.format.hare
+        - match: '{([0-9]*(:[0\-\+\ ]*[0-9]*(x|X|o|b)?)?|[0-9]*%[0-9]*|)}'
+          scope: constant.character.format.hare
