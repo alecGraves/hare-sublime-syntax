@@ -9,6 +9,7 @@ contexts:
     - include: keywords
     - include: strings
     - include: strings_2
+    - include: char_lit
     - include: line_comment
     - include: misc_ops
     - include: core_types
@@ -18,7 +19,6 @@ contexts:
     - include: int_bin_lit
     - include: int_oct_lit
     - include: int_hex_lit
-    - include: char_lit
     # Comparison operator:
     - match: (&&|\|\||==|!=)
       scope: keyword.operator.comparison.hare
@@ -33,7 +33,7 @@ contexts:
       scope: keyword.operator.comparison.hare
     # Preprocessor Directive:
     - match: '(@[a-z]+)'
-      scope: comment.block.preprocessor.hare
+      scope: keyword.attribute.hare
     # Conversion Operators:
     - match: \b(is|as)\b
       scope: keyword.operator.conversion.hare
@@ -45,12 +45,12 @@ contexts:
 
   # Single-quote string literal (character)
   char_lit:
-    - match: 'b?''([^''\\]|\\(x[0-9A-Fa-f]{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.))'''
+    - match: '''([^''\\]|\\(x[0-9A-Fa-f]{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.))'''
       scope: string.quoted.single.hare
 
   # Built-in/core type
   core_types:
-    - match: \b(str|rune|char|bool|int|uint|uintptr|u8|u16|u32|u64|i8|i16|i32|i64|f32|f64|null|void|nullable|valist)\b
+    - match: \b(str|rune|char|bool|int|uint|uintptr|u8|u16|u32|u64|i8|i16|i32|i64|f32|f64|opaque|null|void|nullable|valist)\b
       scope: support.type.primitive.hare
 
   # Integer literal (decimal)
@@ -75,13 +75,13 @@ contexts:
 
   # Floating point literal
   float_lit:
-    - match: '\b[0-9]+\.[0-9]+((e|E)(-)?[0-9]+)?(f(32|64))?\b'
+    - match: '\b[0-9]+\.[0-9]+((e|E)(\+|-)?[0-9]+)?(f(32|64))?\b'
       scope: constant.numeric.floating.hare
-    - match: '\b[0-9]+((e|E)(-)?[0-9]+)?f(32|64)\b'
+    - match: '\b[0-9]+((e|E)(\+|-)?[0-9]+)?f(32|64)\b'
       scope: constant.numeric.floating.hare
 
   keywords:
-    - match: \b(abort|alloc|append|assert|break|case|const|continue|def|defer|delete|else|enum|export|fn|for|free|if|insert|len|let|match|offset|return|size|static|struct|switch|type|union|vaarg|vaend|vastart|yield|use)\b
+    - match: \b(abort|align|alloc|append|assert|break|case|const|continue|def|defer|delete|else|enum|export|fn|for|free|if|insert|len|let|match|offset|return|size|static|struct|switch|type|union|vaarg|vaend|vastart|yield|use)\b
       scope: keyword.control.hare
 
   line_comment:
@@ -93,11 +93,11 @@ contexts:
 
   # Miscellaneous operators
   misc_ops:
-    - match: (=>|::|:|\?|!|\|)
+    - match: (=>|::|:|\?|!|\||\.{2,3})
       scope: keyword.operator.misc.hare
 
   # Strings
-  # see: haredoc fmt
+  # see: haredoc fmt, fmt/iter.ha
   strings:
     - match: '"'
       push:
@@ -108,16 +108,16 @@ contexts:
           scope: constant.character.escape.hare
         - match: '\{\{|\}\}'
           scope: constant.character.format.hare
-        - match: '{([0-9]*(:[0\-\+\ ]*[0-9]*(x|X|o|b)?)?|[0-9]*%[0-9]*|)}'
+        - match: '{([0-9]*(:([0\-\+\=\_\ ]*(\.)?[0-9]*(x|X|o|b)?(\.[0-9]*)?|[efgFs\.UES2]*))?|[0-9]*%[0-9]*)}'
           scope: constant.character.format.hare
 
   strings_2:
     - match: '`'
       push:
-        - meta_scope: string.quoted.single.hare
+        - meta_scope: string.quoted.double.hare
         - match: '`'
           pop: true
         - match: '\{\{|\}\}'
           scope: constant.character.format.hare
-        - match: '{([0-9]*(:[0\-\+\ ]*[0-9]*(x|X|o|b)?)?|[0-9]*%[0-9]*|)}'
+        - match: '{([0-9]*(:([0\-\+\=\_\ ]*(\.)?[0-9]*(x|X|o|b)?(\.[0-9]*)?|[efgFs\.UES2]*))?|[0-9]*%[0-9]*)}'
           scope: constant.character.format.hare
