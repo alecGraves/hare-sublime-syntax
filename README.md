@@ -10,4 +10,4 @@ Last generated: `2022-04-27`
 
 ## Installation
 
-Copy this folder into your Sublime Text `Packages` directory.
+Clone/Copy this folder into your Sublime Text `Packages` directory.
