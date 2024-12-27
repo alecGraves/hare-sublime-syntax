@@ -10,4 +10,7 @@ Last generated: `2022-04-27`
 
 ## Installation
 
-Clone/Copy this folder into your Sublime Text `Packages` directory.
+Clone/Copy this folder into your Sublime Text `Packages` directory:
+
+- `"~/.config/sublime-text/Packages/User"` on Linux.
+- `"~/Library/Application Support/Sublime Text/Packages/User"` on Mac
