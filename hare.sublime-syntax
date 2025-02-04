@@ -93,7 +93,7 @@ contexts:
 
   # Miscellaneous operators
   misc_ops:
-    - match: (=>|::|:|\?|!|\||\.\.|\.\.\.|&\.\.)
+    - match: (=>|::|:|\?|!|\||\.\.\.|\.\.|&\.\.)
       scope: keyword.operator.misc.hare
 
   # Strings
