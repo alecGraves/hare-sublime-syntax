@@ -108,7 +108,7 @@ contexts:
           scope: constant.character.escape.hare
         - match: '\{\{|\}\}'
           scope: constant.character.format.hare
-        - match: '{([0-9]*(:([0\-\+\=\_\ ]*(\.)?[0-9]*(x|X|o|b)?(\.[0-9]*)?|[efgFs\.UES2]*))?|[0-9]*%[0-9]*)}'
+        - match: '{([0-9]*(:([0\-\+\=\_\ ]*(\.)?[0-9]*(x|X|o|b)?(\.[0-9]*)?(e|f|g)?(F(s|\.|U|E|S|2))*))?|[0-9]*%[0-9]*)}'
           scope: constant.character.format.hare
 
   strings_2:
@@ -119,5 +119,5 @@ contexts:
           pop: true
         - match: '\{\{|\}\}'
           scope: constant.character.format.hare
-        - match: '{([0-9]*(:([0\-\+\=\_\ ]*(\.)?[0-9]*(x|X|o|b)?(\.[0-9]*)?|[efgFs\.UES2]*))?|[0-9]*%[0-9]*)}'
+        - match: '{([0-9]*(:([0\-\+\=\_\ ]*(\.)?[0-9]*(x|X|o|b)?(\.[0-9]*)?(e|f|g)?(F(s|\.|U|E|S|2))*))?|[0-9]*%[0-9]*)}'
           scope: constant.character.format.hare
